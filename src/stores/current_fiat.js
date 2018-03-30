@@ -1,12 +1,10 @@
-import {createAction, handleActions} from 'redux-actions'
-
-const FIAT_CURRENCY_SELECT = 'FIAT_CURRENCY_SELECT'
-export const selectFiatCurrency = createAction(FIAT_CURRENCY_SELECT)
+import {handleActions} from 'redux-actions'
+import {setCryptoCurrencies} from "./cryptos"
 
 const initialState = 'USD'
 
 export default handleActions({
-    [selectFiatCurrency](state, action) {
-        return state
+    [setCryptoCurrencies](state, action) {
+        return action.payload.fiat
     }
 }, initialState)
