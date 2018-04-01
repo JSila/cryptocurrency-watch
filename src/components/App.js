@@ -15,6 +15,7 @@ export class App extends Component {
     componentDidMount() {
         const {qs, fetchCryptoCurrencies, currentFiat} = this.props
         const params = new URLSearchParams(qs)
+
         fetchCryptoCurrencies({
             convert: params.get("fiat") || currentFiat
         })

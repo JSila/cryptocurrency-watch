@@ -16,7 +16,7 @@ export const Details = ({currency = {}, currentFiat}) => {
     if (!currency.id) {
         return (
             <div className=".col">
-                <p className="text-center text-muted">Waiting for data to load.</p>
+                <p className="text-center text-muted loading-message">Waiting for data to load.</p>
             </div>
         )
     }
