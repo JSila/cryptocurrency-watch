@@ -1,21 +1,29 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React from "react"
+import PropTypes from "prop-types"
+import {withRouter} from "react-router-dom"
+import {compose} from "redux"
+import {connect} from "react-redux"
 
 import {getCryptoCurrencies} from "../stores/cryptos"
-import CryptoCurrencyLink from "./Link"
+import Link from "./Link"
 
-const List = ({currencies}) => (
+export const List = ({currencies}) => (
     <div className="col-3">
         <ul className="list-group">
-            {currencies.map(c => <CryptoCurrencyLink key={c} id={c} />)}
+            {currencies.map(c => <Link key={c} id={c} />)}
         </ul>
     </div>
 )
 
-const mapStateToProps = (state, props) => {
-    return {
-        currencies: getCryptoCurrencies(state)
-    }
+List.propTypes = {
+    currencies: PropTypes.array.isRequired
 }
 
-export default connect(mapStateToProps)(List)
+const mapStateToProps = state => ({
+    currencies: getCryptoCurrencies(state)
+})
+
+export default compose(
+    withRouter,
+    connect(mapStateToProps)
+)(List)

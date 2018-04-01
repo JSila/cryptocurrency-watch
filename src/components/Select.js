@@ -1,27 +1,35 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React from "react"
+import PropTypes from "prop-types"
+import {connect} from "react-redux"
 
-import './Select.css'
-import {fetchCryptoCurrencies} from "../stores/cryptos";
+import {fetchCryptoCurrencies} from "../stores/cryptos"
 
-const Select = ({currencies, current, selectFiatCurrency}) => {
+import "./Select.css"
+
+export const Select = ({fiats, currentFiat, fetchCryptoCurrencies}) => {
+    const onChange = e => fetchCryptoCurrencies({ convert: e.target.value })
+
     return (
         <div className="row my-3">
             <div className="col">
                 Show prices in
-                <select id="fiat-select" className="form-control" value={current} onChange={e => fetchCryptoCurrencies({convert: e.target.value})}>
-                    {currencies.map(c => <option key={c} value={c}>{c}</option>)}
+                <select id="fiat-select" className="form-control" value={currentFiat} onChange={onChange}>
+                    {fiats.map(f => <option key={f} value={f}>{f}</option>)}
                 </select>
             </div>
         </div>
     )
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        currencies: state.fiats,
-        current: state.currentFiat
-    }
+Select.propTypes = {
+    fiats: PropTypes.array.isRequired,
+    currentFiat: PropTypes.string.isRequired,
+    fetchCryptoCurrencies: PropTypes.func.isRequired
 }
+
+const mapStateToProps = state => ({
+    fiats: state.fiats,
+    currentFiat: state.currentFiat
+})
 
 export default connect(mapStateToProps, {fetchCryptoCurrencies})(Select)

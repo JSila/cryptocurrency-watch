@@ -1,18 +1,22 @@
 import React, {Component} from "react"
-import {Route, withRouter} from 'react-router-dom'
-import {connect }from 'react-redux'
+import PropTypes from "prop-types"
+import {Route, withRouter} from "react-router-dom"
+import {connect }from "react-redux"
+import {compose} from "redux"
 
-import CryptoCurrencyList from "./List"
+import {fetchCryptoCurrencies} from "../stores/cryptos"
+
+import List from "./List"
 import Details from "./Details"
-import FiatCurrencySelect from "./Select"
-import NoCryptoCurrencySelected from "./NothingSelected"
-import {fetchCryptoCurrencies} from "../stores/cryptos";
+import Select from "./Select"
+import NothingSelected from "./NothingSelected"
 
-class App extends Component {
+export class App extends Component {
     componentDidMount() {
-        const params = new URLSearchParams(window.location.search)
-        this.props.fetchCryptoCurrencies({
-            convert: params.get('fiat') || this.props.currentFiat
+        const {qs, fetchCryptoCurrencies, currentFiat} = this.props
+        const params = new URLSearchParams(qs)
+        fetchCryptoCurrencies({
+            convert: params.get("fiat") || currentFiat
         })
     }
     render() {
@@ -27,10 +31,10 @@ class App extends Component {
                     </div>
                 </header>
                 <main>
-                    <FiatCurrencySelect/>
+                    <Select/>
                     <div className="row">
-                        <CryptoCurrencyList/>
-                        <Route exact path="/" component={NoCryptoCurrencySelected}/>
+                        <List/>
+                        <Route exact path="/" component={NothingSelected}/>
                         <Route path="/:id" component={Details}/>
                     </div>
                 </main>
@@ -39,10 +43,17 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        currentFiat: state.currentFiat
-    }
+App.propTypes = {
+    qs: PropTypes.string.isRequired,
+    fetchCryptoCurrencies: PropTypes.func.isRequired,
+    currentFiat: PropTypes.string.isRequired
 }
 
-export default connect(mapStateToProps, {fetchCryptoCurrencies})(App)
+const mapStateToProps = state => ({
+    currentFiat: state.currentFiat
+})
+
+export default compose(
+    withRouter,
+    connect(mapStateToProps, {fetchCryptoCurrencies})
+)(App)

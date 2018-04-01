@@ -1,7 +1,7 @@
-import {handleActions} from 'redux-actions'
+import {handleActions} from "redux-actions"
 import {setCryptoCurrencies} from "./cryptos"
 
-const initialState = 'USD'
+const initialState = "USD"
 
 export default handleActions({
     [setCryptoCurrencies](state, action) {
