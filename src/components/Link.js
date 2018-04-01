@@ -23,7 +23,7 @@ export const Link = ({currency, currentFiat, selectCryptoCurrency}) => {
 }
 
 Link.propTypes = {
-    currency: PropTypes.object,
+    currency: PropTypes.object.isRequired,
     selectCryptoCurrency: PropTypes.func.isRequired,
     currentFiat: PropTypes.string.isRequired
 }
