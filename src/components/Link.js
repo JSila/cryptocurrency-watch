@@ -16,8 +16,12 @@ export const Link = ({currency, currentFiat, selectCryptoCurrency}) => {
     const onClick = () => selectCryptoCurrency(currency.id)
 
     return (
-        <NavLink activeClassName="active" className="list-group-item" to={to} onClick={onClick}>
-            {currency.name}
+        <NavLink activeClassName="active" className="list-group-item list-group-item-action" to={to} onClick={onClick}>
+            <h5>{currency.rank}. {currency.name} ({currency.symbol})</h5>
+            <p className="small">
+                Price change in 24h: {currency.percent_change_24h} %<br/>
+                Price: {currentFiat} {currency[`price_${currentFiat.toLowerCase()}`]}
+            </p>
         </NavLink>
     )
 }

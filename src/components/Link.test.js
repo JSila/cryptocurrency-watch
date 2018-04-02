@@ -28,7 +28,8 @@ describe("Link", () => {
         const wrapper = shallow(<Link currency={currency} selectCryptoCurrency={() => {}} currentFiat="USD"/>)
         const navLink = wrapper.find(NavLink)
 
-        expect(navLink.prop("children")).toEqual(currency.name)
+        expect(navLink.find("h5").text()).toEqual("1. Bitcoin (BTC)")
+        expect(navLink.find("p").text()).toEqual("Price change in 24h: -2.32 %Price: USD 6764.39")
         expect(navLink.prop("to")).toEqual({
             pathname: `/${currency.id}`,
             search: `?fiat=USD`
