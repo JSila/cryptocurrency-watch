@@ -1,17 +1,17 @@
 import React from "react"
 import {shallow} from "enzyme"
+import {Route} from "react-router-dom"
+
 import {App} from './App'
-import List from "./List"
-import Select from "./Select"
+import NavBar from "./NavBar"
 
 describe("App", () => {
 
-    it("renders Select, List and two Route components", () => {
-        const wrapper = shallow(<App qs="" fetchCryptoCurrencies={()=>{}} currentFiat=""/>)
-        expect(wrapper.find(List).exists()).toBe(true)
-        expect(wrapper.find(Select).exists()).toBe(true)
+    it("renders NavBar and two Route components", () => {
+        const wrapper = shallow(<App fetchCryptoCurrencies={()=>{}} currentFiat="USD" qs=""/>)
 
-        expect(wrapper.find("Route").length).toEqual(2)
+        expect(wrapper.find(NavBar).exists()).toBe(true)
+        expect(wrapper.find(Route).length).toEqual(2)
     })
 
     it("fetches cryptocurrencies in USD in component did mount", () => {
@@ -25,4 +25,5 @@ describe("App", () => {
         const wrapper = shallow(<App qs="?fiat=EUR" fetchCryptoCurrencies={fetchFn} currentFiat="USD"/>)
         expect(fetchFn).toBeCalledWith({convert:"EUR"})
     })
+
 })

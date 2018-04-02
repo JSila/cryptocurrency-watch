@@ -12,7 +12,7 @@ const store = configureStore()
 export default (
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <App qs={window.location.search}/>
+            <App qs={window.location.search} />
         </ConnectedRouter>
     </Provider>
 )

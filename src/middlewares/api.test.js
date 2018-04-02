@@ -42,10 +42,6 @@ const httpClient = {
     get: jest.fn().mockImplementation(() => Promise.resolve({data}))
 }
 
-const history = {
-    push: jest.fn()
-}
-
 describe("apiMiddleware", async () => {
     it("dispatches setCryptoCurrencies on CRYPTO_CURRENCIES_FETCH action", done => {
         const store = {}
@@ -58,7 +54,6 @@ describe("apiMiddleware", async () => {
 
         // not a great way to wait for .then to finish but it works!
         process.nextTick(() => {
-            expect(history.push).toBeCalledWith({ search: "?fiat=EUR" })
             expect(dispatch.mock.calls[1][0]).toEqual({
                 type: CRYPTO_CURRENCIES_SET,
                 payload: {

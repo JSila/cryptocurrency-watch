@@ -1,15 +1,14 @@
 import React, {Component} from "react"
 import PropTypes from "prop-types"
-import {Route, withRouter} from "react-router-dom"
-import {connect }from "react-redux"
+import {Redirect, Route, Switch, withRouter} from "react-router-dom"
+import {connect} from "react-redux"
 import {compose} from "redux"
 
 import {fetchCryptoCurrencies} from "../stores/cryptos"
 
-import List from "./List"
-import Details from "./Details"
-import Select from "./Select"
-import NothingSelected from "./NothingSelected"
+import IndexScreen from "./IndexScreen"
+import SettingsScreen from "./SettingsScreen"
+import NavBar from "./NavBar"
 
 export class App extends Component {
     componentDidMount() {
@@ -23,22 +22,14 @@ export class App extends Component {
     render() {
         return (
             <div className="container">
-                <header className="mt-5">
-                    <div className="row">
-                        <div className="col text-center">
-                            <h1>Crypto-Currency Watch</h1>
-                            <hr/>
-                        </div>
-                    </div>
+                <header className="mb-4">
+                    <NavBar/>
                 </header>
-                <main>
-                    <Select/>
-                    <div className="row">
-                        <List/>
-                        <Route exact path="/" component={NothingSelected}/>
-                        <Route path="/:id" component={Details}/>
-                    </div>
-                </main>
+                <Switch>
+                    <Redirect from="/" exact to="/list" />
+                    <Route path="/list" component={IndexScreen} />
+                    <Route path="/settings" component={SettingsScreen} />
+                </Switch>
             </div>
         )
     }

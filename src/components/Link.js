@@ -5,22 +5,18 @@ import {connect} from "react-redux"
 import {compose} from "redux"
 
 import {selectCryptoCurrency} from "../stores/current_crypto"
-import qs from "query-string"
 
 export const Link = ({currency, currentFiat, selectCryptoCurrency}) => {
-    const querystring = qs.stringify({ fiat: currentFiat })
-    const to = {
-        pathname: `/${currency.id}`,
-        search: `?${querystring}`
-    }
+    const to = `/list/${currency.id}`
+    const priceFiat = +currency[`price_${currentFiat.toLowerCase()}`]
+
     const onClick = () => selectCryptoCurrency(currency.id)
 
     return (
         <NavLink activeClassName="active" className="list-group-item list-group-item-action" to={to} onClick={onClick}>
             <h5>{currency.rank}. {currency.name} ({currency.symbol})</h5>
             <p className="small">
-                Price change in 24h: {currency.percent_change_24h} %<br/>
-                Price: {currentFiat} {currency[`price_${currentFiat.toLowerCase()}`]}
+                Current value in {currentFiat}: <strong>{priceFiat.toFixed(2)}</strong> <br/> (<strong>{currency.percent_change_24h} %</strong> change in 24 h)
             </p>
         </NavLink>
     )

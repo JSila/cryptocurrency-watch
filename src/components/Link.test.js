@@ -29,11 +29,8 @@ describe("Link", () => {
         const navLink = wrapper.find(NavLink)
 
         expect(navLink.find("h5").text()).toEqual("1. Bitcoin (BTC)")
-        expect(navLink.find("p").text()).toEqual("Price change in 24h: -2.32 %Price: USD 6764.39")
-        expect(navLink.prop("to")).toEqual({
-            pathname: `/${currency.id}`,
-            search: `?fiat=USD`
-        })
+        expect(navLink.find("p").text()).toEqual("Current value in USD: 6764.39  (-2.32 % change in 24 h)")
+        expect(navLink.prop("to")).toEqual("/list/bitcoin")
     })
 
     it("calls function on link click", () => {

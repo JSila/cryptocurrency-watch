@@ -10,7 +10,7 @@ import history from './utils/history'
 const composeEnhancer = process.env.NODE_ENV === 'production' ? compose : composeWithDevTools
 
 const middlewares = [
-    apiMiddleware(axios, history),
+    apiMiddleware(axios),
     routerMiddleware(history)
 ]
 
